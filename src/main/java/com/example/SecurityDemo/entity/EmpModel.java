@@ -24,6 +24,4 @@ public class EmpModel {
     private String email;
     @Name(value = "city")
     private String city;
-
-
 }

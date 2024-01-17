@@ -35,15 +35,16 @@ public class SecurityConfig {
         return new UserInfoService();
     }
 
-//     Configuring HttpSecurity
+    //     Configuring HttpSecurity
     @Bean
     public SecurityFilterChain securityFilterChain1(HttpSecurity http) throws Exception {
         return http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers(new AntPathRequestMatcher("/auth/generateToken")).permitAll()
+                .authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/auth/generateToken")).permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/auth/user/**")).authenticated()
+                .authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/auth/user/**")).permitAll()
                 .and()
+                /*.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/auth/user/**")).authenticated()
+                .and()*/
                 .authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/auth/admin/**")).authenticated()
                 .and()
                 .sessionManagement()
@@ -53,24 +54,6 @@ public class SecurityConfig {
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
-  /*  @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       return   http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
-                .antMatchers("/auth/user/**").authenticated()
-                .antMatchers("/auth/admin/**").authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).build();
-
-//        return http.build();
-    }*/
-
 
     // Password Encoding
     @Bean

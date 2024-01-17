@@ -5,10 +5,6 @@ import com.example.SecurityDemo.entity.UserInfo;
 import com.example.SecurityDemo.repository.UserInfoRepository;
 import com.example.SecurityDemo.service.JwtService;
 import com.example.SecurityDemo.service.UserInfoService;
-//import com.ey.springboot3security.entity.AuthRequest;
-//import com.ey.springboot3security.entity.UserInfo;
-//import com.ey.springboot3security.service.JwtService;
-//import com.ey.springboot3security.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,12 +28,8 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private UserInfoRepository User;
+    private UserInfoRepository user;
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome this endpoint is not secure";
-    }
 
     @PostMapping("/addNewUser")
     public String addNewUser(@RequestBody UserInfo userInfo) {
@@ -46,15 +37,15 @@ public class UserController {
     }
 
     @GetMapping("/user/userProfile")
-    @PreAuthorize("hasAuthority('USER')")
+//  @PreAuthorize("hasAuthority('USER')")
     public List<UserInfo> userProfile() {
-        return User.FindUsers();
+        return user.findUsers();
     }
 
     @GetMapping("/admin/adminProfile")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserInfo> adminProfile() {
-        return User.FindAdmins();
+        return user.findAdmins();
     }
 
     @PostMapping("/generateToken")
@@ -67,4 +58,3 @@ public class UserController {
         }
     }
 }
-

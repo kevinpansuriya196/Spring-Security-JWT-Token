@@ -14,9 +14,9 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 
     //    SELECT * FROM security.users where roles="USER";
     @Query(nativeQuery = true, value = "SELECT * FROM security.users where roles='USER' ")
-    List<UserInfo> FindUsers();
+    List<UserInfo> findUsers();
 
     //    SELECT * FROM security.users where roles="ADMIN";
     @Query(nativeQuery = true, value = "SELECT * FROM security.users where roles='ADMIN' ")
-    List<UserInfo> FindAdmins();
+    List<UserInfo> findAdmins();
 }
