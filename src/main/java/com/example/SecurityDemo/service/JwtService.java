@@ -20,11 +20,17 @@ public class JwtService {
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
     public String generateToken(String userName) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+       try {
+           Map<String, Object> claims = new HashMap<>();
+           return createToken(claims, userName);
+       }
+       catch (Exception e)
+       {
+            return  "Invalid information";
+       }
     }
 
-    private String createToken(Map<String, Object> claims, String userName) {
+    public String createToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userName)
@@ -51,7 +57,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         try {
             return Jwts
 
@@ -65,7 +71,7 @@ public class JwtService {
         }
     }
 
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 

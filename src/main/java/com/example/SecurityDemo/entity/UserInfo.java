@@ -21,4 +21,9 @@ public class UserInfo {
     private String password;
     private String roles;
 
+    public UserInfo(String name, String password, String roles) {
+        this.name = name;
+        this.password = password;
+        this.roles = roles;
+    }
 }
