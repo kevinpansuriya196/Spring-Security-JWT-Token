@@ -3,8 +3,11 @@ package com.example.SecurityDemo.service;
 
 import com.example.SecurityDemo.entity.UserInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -14,10 +17,12 @@ import static javafx.beans.binding.Bindings.when;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
+//@ExtendWith(MockitoExtension.class)
 class UserInfoDetailsTest {
+
     @InjectMocks
     private UserInfoDetails userInfoDetails;
-    @InjectMocks
+    @Mock
     private UserInfo userInfo;
 
     String name = "admin";
@@ -25,11 +30,9 @@ class UserInfoDetailsTest {
     Collection<? extends GrantedAuthority> authorities = Collections.singletonList(() -> "USER");
 
 
-
-
     @Test
     void getPasswordTest() {
-        UserInfoDetails userInfoDetails = new UserInfoDetails(new UserInfo("admin", "admin", "USER"));
+        userInfoDetails = new UserInfoDetails(new UserInfo("admin", "admin", "USER"));
         String resultPassword = userInfoDetails.getPassword();
         assertEquals("admin", resultPassword);
     }
@@ -44,21 +47,21 @@ class UserInfoDetailsTest {
 
     @Test
     void isAccountNonLockedTest() {
-        UserInfoDetails userInfoDetails = new UserInfoDetails(new UserInfo("admin", "admin", "USER"));
+        userInfoDetails = new UserInfoDetails(new UserInfo("admin", "admin", "USER"));
         boolean result = userInfoDetails.isAccountNonLocked();
         assertTrue(result);
     }
 
     @Test
     void isCredentialsNonExpiredTest() {
-        UserInfoDetails userInfoDetails = new UserInfoDetails(new UserInfo("admin", "admin", "USER"));
+        userInfoDetails = new UserInfoDetails(new UserInfo("admin", "admin", "USER"));
         boolean result = userInfoDetails.isCredentialsNonExpired();
         assertTrue(result);
     }
 
     @Test
     void isEnabledTest() {
-        UserInfoDetails userInfoDetails = new UserInfoDetails(new UserInfo("1", "admin", "admin@gmail.com"));
+        userInfoDetails = new UserInfoDetails(new UserInfo("1", "admin", "admin@gmail.com"));
         boolean result = userInfoDetails.isEnabled();
         assertTrue(result);
     }

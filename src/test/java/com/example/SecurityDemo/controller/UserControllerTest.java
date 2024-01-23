@@ -68,13 +68,9 @@ class UserControllerTest {
         Assertions.assertEquals(list, response);
     }
 
+    /*  -----------------authenticateAndGetToken valid user--------------- -*/
     @Test
-    void authenticateAndGetTokenTest() {
-    }
-
-    /*  -------------------------------- -*/
-    @Test
-    void authenticateAndGetToken_ValidUser_ReturnsToken() {
+    void authenticateAndGetTokenValidUserTest() {
         AuthRequest authRequest = new AuthRequest("validUsername", "validPassword");
         Authentication mockAuthentication = mock(Authentication.class);
         Mockito.when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(mockAuthentication);
@@ -87,8 +83,9 @@ class UserControllerTest {
         assertEquals("mockedToken", result);
     }
 
+    /*  ------------authenticateAndGetToken gives exception ---------*/
     @Test
-    void authenticateAndGetToken_InvalidUser_ThrowsException() {
+    void authenticateAndGetTokenExceptionTest() {
         AuthRequest authRequest = new AuthRequest("invalidUsername", "invalidPassword");
         Authentication mockAuthentication = mock(Authentication.class);
 
