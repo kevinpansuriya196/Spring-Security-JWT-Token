@@ -35,7 +35,7 @@ public class SecurityConfig {
         return new UserInfoService();
     }
 
-    //     Configuring HttpSecurity
+    // Configuring HttpSecurity
     @Bean
     public SecurityFilterChain securityFilterChain1(HttpSecurity http) throws Exception {
         return http.csrf().disable()
@@ -43,8 +43,6 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/auth/user/**")).permitAll()
                 .and()
-                /*.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/auth/user/**")).authenticated()
-                .and()*/
                 .authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/auth/admin/**")).authenticated()
                 .and()
                 .sessionManagement()
@@ -73,6 +71,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
-
 }

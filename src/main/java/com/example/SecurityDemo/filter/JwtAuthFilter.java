@@ -52,7 +52,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
     }
 
-    private void handleJwtException(HttpServletResponse response, String message, Exception e) throws IOException {
+    void handleJwtException(HttpServletResponse response, String message, Exception e) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(message);
 
