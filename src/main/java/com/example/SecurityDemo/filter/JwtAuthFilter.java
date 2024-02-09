@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-// This class helps us to validate the generated jwt token
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
@@ -24,7 +23,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private UserInfoService userDetailsService;
+    private UserInfoService userInfoService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -38,8 +37,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 username = jwtService.extractUsername(token);
             }
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (username != null) {
+                UserDetails userDetails = userInfoService.loadUserByUsername(username);
                 if (jwtService.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -47,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             handleJwtException(response, "Something went wrong with TOKEN.", e);
         }
     }
@@ -55,12 +54,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     void handleJwtException(HttpServletResponse response, String message, Exception e) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(message);
-
     }
 
-    private void handleGenericException(HttpServletResponse response, String message, Exception e) throws IOException {
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        response.getWriter().write(message);
-
-    }
 }

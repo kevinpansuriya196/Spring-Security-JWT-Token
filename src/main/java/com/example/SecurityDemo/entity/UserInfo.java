@@ -1,8 +1,6 @@
 package com.example.SecurityDemo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +9,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
+@Getter
+@Setter
 public class UserInfo {
 
     @Id

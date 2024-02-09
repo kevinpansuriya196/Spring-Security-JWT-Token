@@ -2,11 +2,13 @@ package com.example.SecurityDemo.service;
 
 import com.example.SecurityDemo.entity.UserInfo;
 import com.example.SecurityDemo.repository.UserInfoRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,8 +19,9 @@ import java.util.Optional;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserInfoServiceTest {
@@ -29,7 +32,7 @@ class UserInfoServiceTest {
     private UserInfoRepository repository;
     @Mock
     private PasswordEncoder encoder;
- 
+
     /*    loadUserByUsername    */
     @Test
     void loadUserByUsernameTest() {
@@ -56,5 +59,7 @@ class UserInfoServiceTest {
         Mockito.verify(encoder).encode("abc");
         Mockito.verify(repository).save(userInfo);
     }
+
+    /*  -------------------------------------  */
 
 }
