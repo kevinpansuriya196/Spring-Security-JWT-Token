@@ -88,7 +88,6 @@ class JwtAuthFilterTest {
         verifyNoMoreInteractions(response);
     }
 
-
     @Test
     public void testValidJwtTokenFF() throws ServletException, IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
@@ -116,7 +115,18 @@ class JwtAuthFilterTest {
         verifyNoMoreInteractions(response);
     }
 
-
+    @Test
+    public void testValidJwtTokenException() throws ServletException, IOException {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        FilterChain filterChain = mock(FilterChain.class);
+        when(request.getHeader(null)).thenReturn(null);
+        RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> jwtAuthFilter.doFilterInternal(request,response,filterChain)
+        );
+        assertEquals("Error parsing JWT token", exception.getMessage());
+    }
     @Test
     public void testValidJwtToken2TF() throws ServletException, IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);

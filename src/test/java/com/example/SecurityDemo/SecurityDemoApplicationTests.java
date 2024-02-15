@@ -18,9 +18,7 @@ class SecurityDemoApplicationTests {
 
     @Test
     public void contextLoads() {
-        // This test method simply checks that the application context loads successfully.
-        // If the context loads without any exceptions, the test passes.
         SecurityDemoApplication.main(new String[] {});
-        assertTrue(true); // Placeholder assertion to indicate that the test passes
+        assertTrue(true);
     }
 }

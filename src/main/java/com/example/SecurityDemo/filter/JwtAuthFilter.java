@@ -47,7 +47,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            handleJwtException(response, "Something went wrong with TOKEN.", e);
+            throw new RuntimeException("Error parsing JWT token", e);
         }
     }
 
